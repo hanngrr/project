@@ -17,43 +17,42 @@ class Home extends StatelessWidget {
   }
 }
 
-class MyHome extends  StatefulWidget{
+class MyHome extends StatefulWidget {
   MyHome({Key key}) : super(key: key);
 
-  @override 
+  @override
   _MyHomeState createState() => _MyHomeState();
 }
 
-class _MyHomeState extends State<MyHome>{
-
-  int _currentIndex = 0;
+class _MyHomeState extends State<MyHome> {
+  int _currentIndex = 2;
 
   final _pageController = PageController();
 
-  @override 
-  Widget build(BuildContext context){
+  @override
+  Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white,
-        title: Text("Lendit", style: TextStyle(
-          color: Color.fromRGBO(255, 204, 92, 100.0)
-        ),),
-       centerTitle: true,
+        title: Text(
+          "Lendit",
+          style: TextStyle(color: Color.fromRGBO(255, 204, 92, 100.0)),
+        ),
+        centerTitle: true,
       ),
-      body:
-      PageView(
+      body: PageView(
         physics: ClampingScrollPhysics(),
         controller: _pageController,
         children: <Widget>[
+          Add(),
           Pending(),
           Overdue(),
-          Add(),
           Paid(),
           More(),
         ],
-        onPageChanged: (int index){
+        onPageChanged: (int index) {
           setState(() {
-           _currentIndex = index;
+            _currentIndex = index;
           });
         },
       ),
@@ -64,17 +63,35 @@ class _MyHomeState extends State<MyHome>{
         height: 50,
         index: _currentIndex,
         items: <Widget>[
-          Icon(Icons.rotate_right, size: 20, color: Colors.black,),
-          Icon(Icons.timelapse, size: 20, color: Colors.black,),
-          Icon(Icons.add, size: 20, color: Colors.black,),
-          Icon(Icons.done_all, size: 20, color: Colors.black,),
-          Icon(Icons.more_horiz, size: 20, color: Colors.black,)
+          Icon(
+            Icons.add,
+            size: 20,
+            color: Colors.black,
+          ),
+          Icon(
+            Icons.rotate_right,
+            size: 20,
+            color: Colors.black,
+          ),
+          Icon(
+            Icons.timelapse,
+            size: 20,
+            color: Colors.black,
+          ),
+          Icon(
+            Icons.done_all,
+            size: 20,
+            color: Colors.black,
+          ),
+          Icon(
+            Icons.more_horiz,
+            size: 20,
+            color: Colors.black,
+          )
         ],
-        animationDuration: Duration(
-          milliseconds: 300
-        ),
+        animationDuration: Duration(milliseconds: 300),
         animationCurve: Curves.easeInCirc,
-        onTap: (int index){
+        onTap: (int index) {
           setState(() {
             _pageController.jumpToPage(index);
           });
