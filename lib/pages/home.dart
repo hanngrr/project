@@ -1,7 +1,6 @@
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:project/fragments/add.dart';
-import 'package:project/fragments/more.dart';
 import 'package:project/fragments/overdue.dart';
 import 'package:project/fragments/paid.dart';
 import 'package:project/fragments/pending.dart';
@@ -25,7 +24,7 @@ class MyHome extends StatefulWidget {
 }
 
 class _MyHomeState extends State<MyHome> {
-  int _currentIndex = 2;
+  int _currentIndex = 0;
 
   final _pageController = PageController();
 
@@ -44,11 +43,10 @@ class _MyHomeState extends State<MyHome> {
         physics: ClampingScrollPhysics(),
         controller: _pageController,
         children: <Widget>[
-          Add(),
           Pending(),
           Overdue(),
+          Add(),
           Paid(),
-          More(),
         ],
         onPageChanged: (int index) {
           setState(() {
@@ -64,11 +62,6 @@ class _MyHomeState extends State<MyHome> {
         index: _currentIndex,
         items: <Widget>[
           Icon(
-            Icons.add,
-            size: 20,
-            color: Colors.black,
-          ),
-          Icon(
             Icons.rotate_right,
             size: 20,
             color: Colors.black,
@@ -79,15 +72,15 @@ class _MyHomeState extends State<MyHome> {
             color: Colors.black,
           ),
           Icon(
-            Icons.done_all,
+            Icons.add,
             size: 20,
             color: Colors.black,
           ),
           Icon(
-            Icons.more_horiz,
+            Icons.done_all,
             size: 20,
             color: Colors.black,
-          )
+          ),
         ],
         animationDuration: Duration(milliseconds: 300),
         animationCurve: Curves.easeInCirc,
