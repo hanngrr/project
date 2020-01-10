@@ -25,6 +25,42 @@ class FirestoreServ {
     });
   }
 
+  Future<dynamic> deleteList(String debtorName) async {
+    final TransactionHandler deleteTransaction = (Transaction tx) async {
+      final DocumentSnapshot ds =
+          await tx.get(myCollection.document(debtorName));
+
+      await tx.delete(ds.reference);
+      return {'deleted': true};
+    };
+
+    return Firestore.instance
+        .runTransaction(deleteTransaction)
+        .then((result) => result['deleted'])
+        .catchError((error) {
+      print('error: $error');
+      return false;
+    });
+  }
+
+  Future<dynamic> updateList(PendingList list) async {
+    final TransactionHandler updateTransaction = (Transaction tx) async {
+      final DocumentSnapshot ds =
+          await tx.get(myCollection.document('debtorName'));
+
+      await tx.update(ds.reference, list.toMap());
+      return {'updated': true};
+    };
+
+    return Firestore.instance
+        .runTransaction(updateTransaction)
+        .then((result) => result['updated'])
+        .catchError((error) {
+      print('error: $error');
+      return false;
+    });
+  }
+
   Stream<QuerySnapshot> getPendingList({int offset, int limit}) {
     Stream<QuerySnapshot> snapshots = myCollection.snapshots();
 

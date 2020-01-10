@@ -48,16 +48,16 @@ class _PendingState extends State<Pending> {
                     return Stack(children: <Widget>[
                       Column(children: <Widget>[
                         Padding(
-                          padding: EdgeInsets.only(left: 8.0, right: 8.0),
+                          padding: EdgeInsets.only(left: 15.0, right: 15.0),
                           child: Container(
                             width: MediaQuery.of(context).size.width,
                             height: 80.0,
                             child: Padding(
-                              padding: EdgeInsets.only(top: 8.0, bottom: 8.0),
+                              padding: EdgeInsets.only(top: 10.0, bottom: 8.0),
                               child: Material(
+                                borderRadius: BorderRadius.circular(5.0),
                                 color: Colors.white,
-                                elevation: 14.0,
-                                shadowColor: Color(0x802196F3),
+                                elevation: 5.0,
                                 child: Center(
                                   child: Padding(
                                     padding: EdgeInsets.all(8.0),

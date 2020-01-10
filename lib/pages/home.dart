@@ -1,7 +1,6 @@
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:project/fragments/add.dart';
-import 'package:project/fragments/overdue.dart';
 import 'package:project/fragments/paid.dart';
 import 'package:project/fragments/pending.dart';
 
@@ -44,7 +43,6 @@ class _MyHomeState extends State<MyHome> {
         controller: _pageController,
         children: <Widget>[
           Pending(),
-          Overdue(),
           Add(),
           Paid(),
         ],
@@ -63,11 +61,6 @@ class _MyHomeState extends State<MyHome> {
         items: <Widget>[
           Icon(
             Icons.rotate_right,
-            size: 20,
-            color: Colors.black,
-          ),
-          Icon(
-            Icons.timelapse,
             size: 20,
             color: Colors.black,
           ),
