@@ -2,8 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
-import 'package:flutter_sms/flutter_sms.dart';
-import 'package:project/fragments/firestoreserv.dart';
+import 'package:http/http.dart' as http;
 
 class Add extends StatefulWidget {
   Add();
@@ -16,6 +15,12 @@ class _AddState extends State<Add> {
   String debtorName, amount, debtorContactNumber, debtorEmail;
 
   String dueDate = "Not set";
+
+  final _debtorName = TextEditingController();
+  final _amount = TextEditingController();
+  final _debtorContactNumber = TextEditingController();
+  final _debtorEmail = TextEditingController();
+  final String _message = "SMS Successful! Pay now!";
 
   getDebtorName(debtorName) {
     this.debtorName = debtorName;
@@ -42,18 +47,54 @@ class _AddState extends State<Add> {
         Firestore.instance.collection('add').document(debtorName);
     Map<String, dynamic> debtors = {
       "debtorName": debtorName,
-      "amount": amount,
+      "amount": "PHP " + amount,
       "dueDate": dueDate,
       "debtorContactNumber": debtorContactNumber,
       "debtorEmail": debtorEmail,
+      "status": true
     };
     ds.setData(debtors).whenComplete(() {
       print("Successfully Added!");
+      callservice();
+      _showDialog();
     });
   }
 
   void initState() {
     super.initState();
+  }
+
+  void _showDialog() {showDialog(
+      context: context,
+      builder: (BuildContext context) {return AlertDialog(
+          title: Text("Saved!"),
+          content: Text("Successfully Added"),
+          actions: <Widget>[FlatButton(
+              child: Text("Okay"),
+              onPressed: () {
+                dispose();
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  void dispose() {
+    _debtorName.clear();
+    _amount.clear();
+    _debtorContactNumber.clear();
+    _debtorEmail.clear();
+    super.dispose();
+  }
+
+  Future callservice() async{
+    String _url = "https://rest.nexmo.com/sms/json?api_key=30a7c3af&api_secret=mLFPmotzVZBOmQt7&to=639362563550&from=''&text=$_message";
+    var res = await http.post(_url);
+    print(res.body);
+    
   }
 
   @override
@@ -74,6 +115,7 @@ class _AddState extends State<Add> {
                     padding:
                         EdgeInsets.only(left: 16.0, right: 16.0, top: 16.0),
                     child: TextFormField(
+                      controller: _debtorName,
                       onChanged: (String debtorName) {
                         getDebtorName(debtorName);
                       },
@@ -88,12 +130,15 @@ class _AddState extends State<Add> {
                     padding:
                         EdgeInsets.only(left: 16.0, right: 16.0, top: 16.0),
                     child: TextFormField(
+                      controller: _amount,
                       onChanged: (String amount) {
                         getAmount(amount);
                       },
                       decoration: InputDecoration(
                           hasFloatingPlaceholder: true,
                           labelText: "Amount",
+                          prefixText: "PHP ",
+                          hintText: " 10",
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(5.0),
                           )),
@@ -164,6 +209,7 @@ class _AddState extends State<Add> {
                     padding:
                         EdgeInsets.only(left: 16.0, right: 16.0, top: 16.0),
                     child: TextFormField(
+                      controller: _debtorContactNumber,
                       onChanged: (String debtorContactNumber) {
                         getDebtorContactNumber(debtorContactNumber);
                       },
@@ -178,6 +224,7 @@ class _AddState extends State<Add> {
                     padding:
                         EdgeInsets.only(left: 16.0, right: 16.0, top: 16.0),
                     child: TextFormField(
+                      controller: _debtorEmail,
                       onChanged: (String debtorEmail) {
                         getDebtorEmail(debtorEmail);
                       },
@@ -198,7 +245,6 @@ class _AddState extends State<Add> {
                             borderRadius: BorderRadius.circular(5.0)),
                         onPressed: () {
                           createData();
-                          print("Succesfully Added");
                         },
                         child: const Text("Save",
                             style: TextStyle(color: Colors.black)),

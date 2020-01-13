@@ -1,6 +1,6 @@
 // import 'package:flutter/material.dart';
 // import 'package:firebase_auth/firebase_auth.dart';
-// import 'package:project/pages/home_page.dart';
+// import 'package:project/pages/home.dart';
 
 // class LoginPage extends StatefulWidget{
 
@@ -35,7 +35,7 @@
 //       try{
 //         if (_formType == FormType.login){
 //           AuthResult user = await FirebaseAuth.instance.signInWithEmailAndPassword(email: _email, password: _password);
-//           Navigator.push(context, MaterialPageRoute(builder: (context) => HomePage()));
+//           Navigator.push(context, MaterialPageRoute(builder: (context) => Home()));
 //         } else {
 //           final FirebaseAuth _auth = FirebaseAuth.instance;
 //           final FirebaseUser user = (await _auth.createUserWithEmailAndPassword(email: _email, password: _password)) .user;

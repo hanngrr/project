@@ -31,10 +31,11 @@ class _MyHomeState extends State<MyHome> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.white,
+        elevation: 0.0,
+        backgroundColor: Color.fromRGBO(255, 204, 92, 100.0),
         title: Text(
           "Lendit",
-          style: TextStyle(color: Color.fromRGBO(255, 204, 92, 100.0)),
+          style: TextStyle(color: Colors.white),
         ),
         centerTitle: true,
       ),

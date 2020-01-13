@@ -25,44 +25,28 @@ class FirestoreServ {
     });
   }
 
-  Future<dynamic> deleteList(String debtorName) async {
-    final TransactionHandler deleteTransaction = (Transaction tx) async {
-      final DocumentSnapshot ds =
-          await tx.get(myCollection.document(debtorName));
-
-      await tx.delete(ds.reference);
-      return {'deleted': true};
-    };
-
-    return Firestore.instance
-        .runTransaction(deleteTransaction)
-        .then((result) => result['deleted'])
-        .catchError((error) {
-      print('error: $error');
-      return false;
+  deleteList(debtorName){
+    Firestore.instance.collection('add').document(debtorName).delete().catchError((error){
+      print(error);
     });
   }
 
-  Future<dynamic> updateList(PendingList list) async {
-    final TransactionHandler updateTransaction = (Transaction tx) async {
-      final DocumentSnapshot ds =
-          await tx.get(myCollection.document('debtorName'));
 
-      await tx.update(ds.reference, list.toMap());
-      return {'updated': true};
-    };
-
-    return Firestore.instance
-        .runTransaction(updateTransaction)
-        .then((result) => result['updated'])
-        .catchError((error) {
-      print('error: $error');
-      return false;
-    });
-  }
 
   Stream<QuerySnapshot> getPendingList({int offset, int limit}) {
-    Stream<QuerySnapshot> snapshots = myCollection.snapshots();
+    Stream<QuerySnapshot> snapshots = myCollection.where("status", isEqualTo: true).snapshots();
+
+    if (offset != null) {
+      snapshots = snapshots.skip(offset);
+    }
+    if (limit != null) {
+      snapshots = snapshots.take(limit);
+    }
+    return snapshots;
+  }
+
+  Stream<QuerySnapshot> getPaidList({int offset, int limit}) {
+    Stream<QuerySnapshot> snapshots = myCollection.where("status", isEqualTo: false).snapshots();
 
     if (offset != null) {
       snapshots = snapshots.skip(offset);
