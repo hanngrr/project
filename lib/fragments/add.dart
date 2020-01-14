@@ -20,7 +20,7 @@ class _AddState extends State<Add> {
   final _amount = TextEditingController();
   final _debtorContactNumber = TextEditingController();
   final _debtorEmail = TextEditingController();
-  final String _message = "SMS Successful! Pay now!";
+  final String _message = "Pay via cash or pay via gcash: <gcash link here>!";
 
   getDebtorName(debtorName) {
     this.debtorName = debtorName;

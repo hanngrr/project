@@ -49,7 +49,7 @@ class _PendingState extends State<Pending> {
                                 horizontal: 8.0, vertical: 22.0),
                             color: Colors.red,
                             child: ListTile(
-                              leading: Icon(Icons.delete_forever,
+                              leading: Icon(Icons.done_all,
                                   color: Colors.white, size: 32.0),
                             ),
                           ),
@@ -60,7 +60,7 @@ class _PendingState extends State<Pending> {
                                     snapshot.data.documents[index].documentID)
                                 .updateData({"status": false});
                             _scaffoldKey.currentState.showSnackBar(SnackBar(
-                              content: Text("Item status updated"),
+                              content: Text("Paid successfully!"),
                             ));
                           },
                           child: Stack(children: <Widget>[
